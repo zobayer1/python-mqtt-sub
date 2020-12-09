@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import click
 from paho.mqtt.client import Client
 
@@ -16,7 +17,9 @@ class MQTTClient(object):
 
         self.client.username_pw_set(config.mqtt_username, config.mqtt_password)
 
-        self.client.on_log = self._on_log
+        if self.config.mqtt_debug:
+            self.client.on_log = self._on_log
+
         self.client.on_connect = self._on_connect
         self.client.ob_subscribe = self._on_subscribe
         self.client.on_message = self._on_message

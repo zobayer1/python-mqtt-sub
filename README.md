@@ -32,6 +32,7 @@ Following keys must be provided in a configuration file:
     mqtt_client = mqtt-client-id-01
     mqtt_topics = (test-topic/0,1),(test-topic/1,1)
     mqtt_clean_session = False
+    mqtt_debug = True
 
 Currently all parameters must be present, you can modify the code to make some of them optional according to your
 application.

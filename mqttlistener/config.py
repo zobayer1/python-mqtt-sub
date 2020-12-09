@@ -19,6 +19,7 @@ class Config(object):
         mqtt_client: str,
         mqtt_topics: list,
         mqtt_clean_session: bool,
+        mqtt_debug: bool,
     ):
         self.mqtt_host = mqtt_host
         self.mqtt_port = mqtt_port
@@ -27,6 +28,7 @@ class Config(object):
         self.mqtt_client = mqtt_client
         self.mqtt_topics = [(tt[0].strip(), int(tt[1].strip())) for tt in mqtt_topics]
         self.mqtt_clean_session = mqtt_clean_session
+        self.mqtt_debug = mqtt_debug
 
     @classmethod
     def load_from(cls, filename: str):
@@ -48,6 +50,7 @@ class Config(object):
                         if tt and len(tt) > 0
                     ],
                     parser["mqtt"]["mqtt_clean_session"].lower() == "true",
+                    parser["mqtt"]["mqtt_debug"].lower() == "true",
                 )
         except KeyError as err:
             click.echo(f"Missing configuration key: {str(err)}")
