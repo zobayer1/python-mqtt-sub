@@ -59,6 +59,11 @@ Example:
         print(f"Message ID: {message.mid}")
         print(f"Message Payload: {message.payload.decode('utf-8')}")
 
+Register in `cli` module:
+
+    client = MQTTClient(config, message_processor=on_message)
+
+
 ## Test Subscription
 
 With mosquitto installed in your system, you can run following command to quickly publish message to a topic:
@@ -66,6 +71,6 @@ With mosquitto installed in your system, you can run following command to quickl
     mosquitto_pub -h localhost -p 1883 -u mqtt-sub-username -P mqtt-sub-password -t test-topic/1 -d -q 1 -l
 
 
-### Author: Zobayer Hasan (zobayer1@gmail.com)
+Author: Zobayer Hasan (zobayer1@gmail.com)
 
-### License: MIT
+License: MIT
