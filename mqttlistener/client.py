@@ -21,7 +21,7 @@ class MQTTClient(object):
             self.client.on_log = self._on_log
 
         self.client.on_connect = self._on_connect
-        self.client.ob_subscribe = self._on_subscribe
+        self.client.on_subscribe = self._on_subscribe
         self.client.on_message = self._on_message
         self.client.on_disconnect = self._on_disconnect
 
