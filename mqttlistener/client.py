@@ -23,6 +23,7 @@ class MQTTClient(object):
         self.client.on_connect = self._on_connect
         self.client.ob_subscribe = self._on_subscribe
         self.client.on_message = self._on_message
+        self.client.on_publish = self._on_publish
         self.client.on_disconnect = self._on_disconnect
 
         self.client.connect(config.mqtt_host, config.mqtt_port, 60)
@@ -56,6 +57,9 @@ class MQTTClient(object):
             click.echo(
                 f"Topic: {msg.topic}, Mid: {msg.mid}, Payload: {msg.payload.decode('utf-8')}"
             )
+
+    def _on_publish(self, client, userdata, mid):
+        click.echo(f"Published by {userdata['client']}, mid: {mid}")
 
     def listen(self):
         try:
