@@ -35,16 +35,12 @@ class MQTTClient(object):
         click.echo(f"{buf}, origin: {userdata['client']}")
 
     def _on_connect(self, client, userdata, flags, rc):
-        click.echo(
-            f"Connected {userdata['client']}, result code: {str(rc)} {str(flags)}"
-        )
+        click.echo(f"Connected {userdata['client']}, result code: {str(rc)} {str(flags)}")
         click.echo(f"Subscribing to all topics...")
         self.client.subscribe(self.config.mqtt_topics)
 
     def _on_subscribe(self, client, userdata, mid, granted_qos):
-        click.echo(
-            f"Subscribed {userdata['client']}, mid: {mid}, granted qos: {granted_qos}"
-        )
+        click.echo(f"Subscribed {userdata['client']}, mid: {mid}, granted qos: {granted_qos}")
         click.echo(f"Listening for {userdata['client']} messages...")
 
     def _on_disconnect(self, client, userdata, rc):
@@ -54,9 +50,7 @@ class MQTTClient(object):
         if hasattr(self, "message_processor"):
             self.message_processor(client, userdata, msg)
         else:
-            click.echo(
-                f"Topic: {msg.topic}, Mid: {msg.mid}, Payload: {msg.payload.decode('utf-8')}"
-            )
+            click.echo(f"Topic: {msg.topic}, Mid: {msg.mid}, Payload: {msg.payload.decode('utf-8')}")
 
     def _on_publish(self, client, userdata, mid):
         click.echo(f"Published by {userdata['client']}, mid: {mid}")
@@ -65,7 +59,5 @@ class MQTTClient(object):
         try:
             self.client.loop_forever()
         except KeyboardInterrupt:
-            click.echo(
-                f"Received KeyboardInterrupt, disconnecting {self.config.mqtt_client}"
-            )
+            click.echo(f"Received KeyboardInterrupt, disconnecting {self.config.mqtt_client}")
             self.client.disconnect()

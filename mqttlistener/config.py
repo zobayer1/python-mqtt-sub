@@ -44,9 +44,7 @@ class Config(object):
                     parser["mqtt"]["mqtt_client"],
                     [
                         tuple(tt.split(","))
-                        for tt in re.findall(
-                            r"\(([^\)]+)\)", parser["mqtt"]["mqtt_topics"]
-                        )
+                        for tt in re.findall(r"\(([^\)]+)\)", parser["mqtt"]["mqtt_topics"])
                         if tt and len(tt) > 0
                     ],
                     parser["mqtt"]["mqtt_clean_session"].lower() == "true",
