@@ -13,10 +13,10 @@ allows subscriptions to multiple topics.
 3. Run `pip install -e .`
 4. Generate distribution packages: `python setup.py sdist bdist_wheel`
 
-### From wheel package
+### From wheel
 
 1. Start a venv with python 3.6+
-2. Install using pip: `pip install python_mqtt_sub-{package_version}.whl
+2. Install using pip: `pip install python_mqtt_sub-{package_version}.whl`
 
 ## Execution
 
