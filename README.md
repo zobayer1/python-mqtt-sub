@@ -6,10 +6,17 @@ allows subscriptions to multiple topics.
 
 ## Installation
 
+### From source
+
 1. Change directory to the root of source folder
 2. Start a venv with Python 3.6+
-2. Run `pip install -e .`
+3. Run `pip install -e .`
+4. Generate distribution packages: `python setup.py sdist bdist_wheel`
 
+### From wheel package
+
+1. Start a venv with python 3.6+
+2. Install using pip: `pip install python_mqtt_sub-{package_version}.whl
 
 ## Execution
 
