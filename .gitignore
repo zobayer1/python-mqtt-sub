@@ -148,3 +148,4 @@ cython_debug/
 # Application configuration
 config.cfg
 mqttlistener/version.py
+requirements.txt

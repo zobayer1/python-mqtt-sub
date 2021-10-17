@@ -2,12 +2,8 @@
 from os import path
 from setuptools import find_packages, setup
 
-try:
-    docs_file = path.join(path.abspath(path.dirname(__file__)), "README.md")
-    with open(docs_file, encoding="utf-8") as f:
-        long_description = "\n" + f.read()
-except FileNotFoundError:
-    long_description = __doc__
+with open("README.md", encoding="utf-8") as f:
+    long_description = "\n" + f.read()
 
 setup(
     name='python-mqtt-sub',
@@ -18,20 +14,10 @@ setup(
     description="Paho MQTT based CLI template",
     keywords="python paho cli mqtt client subscriber publisher pubsub",
     long_description=long_description,
+    long_description_content_type="text/markdown",
     use_scm_version=True,
     packages=find_packages(exclude=["docs", "tests"]),
-    setup_requires=[
-        "wheel",
-        "setuptools-scm",
-    ],
-    install_requires=[
-        "importlib-metadata;python_version<'3.8'",
-        'click',
-        'paho-mqtt'
-    ],
-    include_package_data=True,
-    zip_safe=False,
-    platforms="any",
+    platforms=["any"],
     entry_points={
         "console_scripts": [
             "mqttlistener = mqttlistener.cli:main",
@@ -47,6 +33,9 @@ setup(
         "Operating System :: Unix",
         "Operating System :: Microsoft :: Windows",
         "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
 )

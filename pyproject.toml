@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=42", "wheel", "setuptools_scm[toml]>=3.4"]
+requires = ["setuptools>=45", "wheel", "setuptools_scm>=6.2"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
@@ -8,7 +8,7 @@ write_to_template = "# -*- coding: utf-8 -*-\n\n__version__ = '{version}'\n"
 version_scheme = "release-branch-semver"
 
 [tool.check-manifest]
-ignore = ["mqttlistener/version.py", "config.cfg"]
+ignore = ["mqttlistener/version.py"]
 
 [tool.black]
 line-length = 120
