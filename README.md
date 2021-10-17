@@ -9,13 +9,13 @@ allows subscriptions to multiple topics.
 ### From source
 
 1. Change directory to the root of source folder
-2. Start a venv with Python 3.6+
-3. Run `pip install -e .`
+2. Activate a venv with Python 3.6+
+3. For an editable installation, run `pip install -e .`
 4. Generate distribution packages: `python setup.py sdist bdist_wheel`
 
 ### From wheel
 
-1. Start a venv with python 3.6+
+1. Activate a venv with python 3.6+
 2. Install using pip: `pip install python_mqtt_sub-{package_version}.whl`
 
 ## Execution
@@ -24,12 +24,23 @@ Installation will make `mqttlistener` command available. Run `mqttlistener --hel
 
 Example: `mqttlistener --config-path=/path/to/config.cfg`
 
-This will block the running terminal, use with tools like screen or nohup.
+This will block the running terminal, use with tools like screen or nohup for background execution.
 
+## Development
+
+Install `pre-commit`:
+
+    pip install pre-commit
+    pre-commit install
+    pre-commit autoupdate
+    pre-commit run --all-files
+
+From the next commits, pre-commit hooks will be executed automatically.
 
 ## Configurations
 
-Following keys must be provided in a configuration file:
+Program looks for default configuration file `config.cfg` in current working directory. You can pass in a configuration
+file path using the `--config-path` parameter. Following keys must be provided in a configuration file:
 
     [mqtt]
     mqtt_host = localhost
@@ -37,18 +48,15 @@ Following keys must be provided in a configuration file:
     mqtt_username = mqtt-sub-username
     mqtt_password = mqtt-sub-password
     mqtt_client = mqtt-client-id-01
-    mqtt_topics = (test-topic/0,1),(test-topic/1,1)
-    mqtt_clean_session = False
-    mqtt_debug = True
+    mqtt_topics = (test-topic-a,1),(test-topic-b,1)
+    mqtt_clean_session = false
+    mqtt_debug = true
 
 Currently all parameters must be present, you can modify the code to make some of them optional according to your
 application.
 
 Topic list is given as a comma separated list of tuples. First item of each tuple is topic name, and second item is
 associated qos value. I'll leave it to the user to maintain proper formatting, no validation rules were added.
-
-Program looks for default configuration file `config.cfg` in current working directory. You can pass in a configuration
-file path using the `--config-path` parameter.
 
 ## Message Processing
 
@@ -78,6 +86,6 @@ With mosquitto installed in your system, you can run following command to quickl
     mosquitto_pub -h localhost -p 1883 -u mqtt-sub-username -P mqtt-sub-password -t test-topic/1 -d -q 1 -l
 
 
-Author: Zobayer Hasan (zobayer1@gmail.com)
+## License:
 
-License: MIT
+[MIT License](./LICENSE)
