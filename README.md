@@ -9,13 +9,13 @@ allows subscriptions to multiple topics.
 ### From source
 
 1. Change directory to the root of source folder
-2. Activate a venv with Python 3.6+
+2. Activate a venv with Python 3.11+
 3. For an editable installation, run `pip install -e .`
 4. Generate distribution packages: `python setup.py sdist bdist_wheel`
 
 ### From wheel
 
-1. Activate a venv with python 3.6+
+1. Activate a venv with python 3.11+
 2. Install using pip: `pip install python_mqtt_sub-{package_version}.whl`
 
 ## Execution
@@ -48,7 +48,7 @@ file path using the `--config-path` parameter. Following keys must be provided i
     mqtt_username = mqtt-sub-username
     mqtt_password = mqtt-sub-password
     mqtt_client = mqtt-client-id-01
-    mqtt_topics = (test-topic-a,1),(test-topic-b,1)
+    mqtt_topics = (test-topic-a/+,1),(test-topic-b/+,1)
     mqtt_clean_session = false
     mqtt_debug = true
 
@@ -83,7 +83,7 @@ Register in `cli` module:
 
 With mosquitto installed in your system, you can run following command to quickly publish message to a topic:
 
-    mosquitto_pub -h localhost -p 1883 -u mqtt-sub-username -P mqtt-sub-password -t test-topic/1 -d -q 1 -l
+    mosquitto_pub -h localhost -p 1883 -u mqtt-sub-username -P mqtt-sub-password -t test-topic-a/1 -d -q 1 -l
 
 
 ## License:
