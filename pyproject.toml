@@ -7,9 +7,6 @@ write_to = "mqttlistener/version.py"
 write_to_template = "# -*- coding: utf-8 -*-\n\n__version__ = '{version}'\n"
 version_scheme = "release-branch-semver"
 
-[tool.check-manifest]
-ignore = ["mqttlistener/version.py"]
-
 [tool.black]
 line-length = 120
 target-version = ['py36']
@@ -21,6 +18,7 @@ exclude = '''
   | \.pytest_cache
   | \.tox
   | \.venv
+  | venv
   | build
   | dist
   | setup.py

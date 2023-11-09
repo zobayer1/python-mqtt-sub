@@ -3,7 +3,7 @@ import click
 from paho.mqtt.client import Client
 
 
-class MQTTClient(object):
+class MQTTClient:
     """Manages Paho MQTT client lifecycle and callbacks"""
 
     def __init__(self, config: dict, message_processor=None):
@@ -26,7 +26,7 @@ class MQTTClient(object):
         self.client.on_publish = self._on_publish
         self.client.on_disconnect = self._on_disconnect
 
-        self.client.connect(config.mqtt_host, config.mqtt_port, 60)
+        self.client.connect(config.mqtt_host, config.mqtt_port, 30)
 
         if message_processor:
             self.message_processor = message_processor
@@ -36,7 +36,7 @@ class MQTTClient(object):
 
     def _on_connect(self, client, userdata, flags, rc):
         click.echo(f"Connected {userdata['client']}, result code: {str(rc)} {str(flags)}")
-        click.echo(f"Subscribing to all topics...")
+        click.echo("Subscribing to all topics...")
         self.client.subscribe(self.config.mqtt_topics)
 
     def _on_subscribe(self, client, userdata, mid, granted_qos):
@@ -59,5 +59,6 @@ class MQTTClient(object):
         try:
             self.client.loop_forever()
         except KeyboardInterrupt:
-            click.echo(f"Received KeyboardInterrupt, disconnecting {self.config.mqtt_client}")
+            click.echo(f"\nReceived KeyboardInterrupt, disconnecting {self.config.mqtt_client}")
             self.client.disconnect()
+            click.echo(f"{self.config.mqtt_client} disconnected")

@@ -3,9 +3,9 @@ import os
 
 import click
 
-from .config import Config
-from .client import MQTTClient
-from .process import on_message
+from mqttlistener.config import Config
+from mqttlistener.client import MQTTClient
+from mqttlistener.process import on_message
 
 
 @click.command()
@@ -20,4 +20,4 @@ def main(config_path):
     client = MQTTClient(config, message_processor=on_message)
     click.echo("Starting client loop")
     client.listen()
-    click.echo("Exiting")
+    click.echo("Exiting...")

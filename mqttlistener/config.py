@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import os
 import re
 import json
 from configparser import SafeConfigParser
@@ -7,7 +6,7 @@ from configparser import SafeConfigParser
 import click
 
 
-class Config(object):
+class Config:
     """Manages configuration parameters"""
 
     def __init__(
