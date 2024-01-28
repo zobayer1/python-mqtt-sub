@@ -2,22 +2,25 @@
 import click
 from paho.mqtt.client import Client
 
+from mqttlistener.settings import get_settings
+
 
 class MQTTClient:
     """Manages Paho MQTT client lifecycle and callbacks"""
 
-    def __init__(self, config: dict, message_processor=None):
-        self.config = config
+    def __init__(self, message_processor=None):
+        self.settings = get_settings()
 
         self.client = Client(
-            client_id=config.mqtt_client,
-            clean_session=config.mqtt_clean_session,
-            userdata={"client": config.mqtt_client},
+            client_id=self.settings.mqtt_client,
+            transport=self.settings.mqtt_transport,
+            clean_session=self.settings.mqtt_clean_session,
+            userdata={"client": self.settings.mqtt_client},
         )
 
-        self.client.username_pw_set(config.mqtt_username, config.mqtt_password)
+        self.client.username_pw_set(self.settings.mqtt_username, self.settings.mqtt_password)
 
-        if self.config.mqtt_debug:
+        if self.settings.mqtt_debug:
             self.client.on_log = self._on_log
 
         self.client.on_connect = self._on_connect
@@ -26,7 +29,7 @@ class MQTTClient:
         self.client.on_publish = self._on_publish
         self.client.on_disconnect = self._on_disconnect
 
-        self.client.connect(config.mqtt_host, config.mqtt_port, 30)
+        self.client.connect(self.settings.mqtt_host, self.settings.mqtt_port, 30)
 
         if message_processor:
             self.message_processor = message_processor
@@ -37,7 +40,7 @@ class MQTTClient:
     def _on_connect(self, client, userdata, flags, rc):
         click.echo(f"Connected {userdata['client']}, result code: {str(rc)} {str(flags)}")
         click.echo("Subscribing to all topics...")
-        self.client.subscribe(self.config.mqtt_topics)
+        self.client.subscribe([(topic, self.settings.mqtt_sub_qos) for topic in self.settings.mqtt_sub_topics])
 
     def _on_subscribe(self, client, userdata, mid, granted_qos):
         click.echo(f"Subscribed {userdata['client']}, mid: {mid}, granted qos: {granted_qos}")
@@ -59,6 +62,6 @@ class MQTTClient:
         try:
             self.client.loop_forever()
         except KeyboardInterrupt:
-            click.echo(f"\nReceived KeyboardInterrupt, disconnecting {self.config.mqtt_client}")
+            click.echo(f"\nReceived KeyboardInterrupt, disconnecting {self.settings.mqtt_client}")
             self.client.disconnect()
-            click.echo(f"{self.config.mqtt_client} disconnected")
+            click.echo(f"{self.settings.mqtt_client} disconnected")
